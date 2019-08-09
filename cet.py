@@ -10,6 +10,10 @@ from io import StringIO
 from io import open
 import json
 import os
+import Img
+import logging
+logging.Logger.propagate = False
+logging.getLogger().setLevel(logging.ERROR)
 
 
 def readPDF(pdfFile):
@@ -98,25 +102,39 @@ def _query(province, code, name, number, cookie):
         ExceuteResultType = -1
         Message = "系统错误"
     return dict(ExceuteResultType=ExceuteResultType, Message=Message, data=data)
+
 def code():
-    """
-    获取验证码,返回cookie，和 验证码的b64
-    :return:
-    """
     r = requests.get("http://cet-bm.neea.edu.cn/Home/VerifyCodeImg")
     pic = r.content
     with open('Ver_Img.png', 'wb') as f:
         f.write(pic)
-    Ver_code = input("请输入验证码：")
-    print((r.cookies))
+    Ver_code = Img.ImgToText('Ver_Img.png')
+    print(Ver_code)
+    # Ver_code = input("请输入验证码：")
+
+    # print((r.cookies))
     cookies = r.cookies['ASP.NET_SessionId'] + "分" + r.cookies['BIGipServercet_pool']
     # content = r.content
     # img = 'data:image/jpeg;base64,' + base64.b64encode(content).decode()
     return cookies, Ver_code
-# print(code())
+
+
+
 
 province = "37"
 cookie, code = code()
 name = "马长金"
 number = "37152220001104783x"
 print(_query(province, code, name, number, cookie))
+
+app = Flask(__name__)
+
+@app.route("/query",methods=['POST'])
+def query():
+    province = request.form['province']
+    name = request.form['name']
+    number = request.form['number']
+    _query(province, code, name, number, cookie)
+
+if __name__ == '__main__':
+    app.run(debug=True)

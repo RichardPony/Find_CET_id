@@ -23,11 +23,11 @@ Request_header = getHeaders(login_head)
 print(Request_header)
 url = "http://cet-bm.neea.edu.cn/Home/"
 form_data = {
-    'IDNumber': '371522200011047856',
-    'IDTypeCode': '1',
-    'Name': '马长银',
-    'provinceCode': '11',
-    'verificationCode': ''
+    'IDNumber': '',#身份证号
+    'IDTypeCode': '',#证件类型
+    'Name': '',#姓名
+    'provinceCode': '',#省份代码
+    'verificationCode': ''#验证码
 }
 
 Page_url = url + "QuickPrintTestTicket"

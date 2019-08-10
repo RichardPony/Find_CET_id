@@ -113,17 +113,7 @@ def code():
     cookies = r.cookies['ASP.NET_SessionId'] + "分" + r.cookies['BIGipServercet_pool']
     return cookies, Ver_code
 
-
-
-
-province = "37"
-cookie, code = code()
-name = "马长金"
-number = "37152220001104783x"
-print(_query(province, code, name, number, cookie))
-
 app = Flask(__name__)
-
 
 @app.route("/query",methods=['POST'])
 def query():

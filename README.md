@@ -12,3 +12,8 @@
 
 4.通过flask框架提供api，接受用户提交并返回
 
+cet.py为cookie登录方式，代码源自https://github.com/LDouble/CET  
+
+BackGround.py为session登录方式，暂时未完成，提交表单后无法登录  
+
+img.py为云打码api的http调用，用于自动识别验证码

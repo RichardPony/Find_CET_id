@@ -110,12 +110,7 @@ def code():
         f.write(pic)
     Ver_code = Img.ImgToText('Ver_Img.png')
     print(Ver_code)
-    # Ver_code = input("请输入验证码：")
-
-    # print((r.cookies))
     cookies = r.cookies['ASP.NET_SessionId'] + "分" + r.cookies['BIGipServercet_pool']
-    # content = r.content
-    # img = 'data:image/jpeg;base64,' + base64.b64encode(content).decode()
     return cookies, Ver_code
 
 
@@ -129,12 +124,15 @@ print(_query(province, code, name, number, cookie))
 
 app = Flask(__name__)
 
+
 @app.route("/query",methods=['POST'])
 def query():
     province = request.form['province']
     name = request.form['name']
     number = request.form['number']
-    _query(province, code, name, number, cookie)
+    Cookie,Code = code()
+    res = _query(province, Code, name, number, Cookie)
+    return jsonify(res)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0',port=1000)
